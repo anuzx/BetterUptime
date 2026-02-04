@@ -1,14 +1,21 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 import express from "express";
 import type { Request, Response } from "express";
 import { prisma } from "db/client";
+import { authMiddleware } from "./middleware/auth";
+
+//console.log(process.env.JWT_SECRET)
+
 const app = express();
 
 app.use(express.json());
+import userRouter from "./routes/v1/user.routes";
 
-app.post("/website", async (req: Request, res: Response) => {
+
+app.use("/api/v1/user", userRouter);
+
+app.post("/website",authMiddleware,  async (req: Request, res: Response) => {
   const { url } = req.body;
   if (!url) {
     res.status(411).json({
@@ -19,7 +26,7 @@ app.post("/website", async (req: Request, res: Response) => {
   const website = await prisma.website.create({
     data: {
       url,
-      userId: req.user.id,
+      userId: req.user!.id,
     },
   });
   res.json({
@@ -29,8 +36,7 @@ app.post("/website", async (req: Request, res: Response) => {
 
 app.get("/status/:websiteId", (req, res) => {});
 
-import userRouter from "./routes/v1/user.routes";
 
-app.use("/api/v1/user", userRouter);
 
-app.listen(3000, () => console.log("server running at 3000"));
+
+app.listen(3001, () => console.log("server running at 3001"));

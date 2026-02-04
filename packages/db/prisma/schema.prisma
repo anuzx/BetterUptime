@@ -10,9 +10,9 @@ datasource db {
 
 model User {
    id           Int         @id  @default(autoincrement())   
-  username      String
+  username      String      
   password      String
-  email         String
+  email         String      @unique
   websites      Website[]
 }
 
@@ -27,7 +27,7 @@ model Website {
 
 model Region {
   id           String         @id  @default(uuid())
-  name         String
+  name         String         @unique
   ticks        WebsiteTick[]
 }
 

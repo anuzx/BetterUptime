@@ -14,9 +14,10 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "dotenv": "^17.2.3",
     "pg": "^8.18.0"
   },
-  "exports":{
-    "./client":"./client.ts"
+  "exports": {
+    "./client": "./client.ts"
   }
 }

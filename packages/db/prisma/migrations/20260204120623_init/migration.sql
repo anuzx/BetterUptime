@@ -3,7 +3,7 @@ CREATE TYPE "WebsiteStatus" AS ENUM ('UP', 'Down', 'Unknown');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -15,8 +15,8 @@ CREATE TABLE "User" (
 CREATE TABLE "Website" (
     "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Website_pkey" PRIMARY KEY ("id")
 );
@@ -36,7 +36,7 @@ CREATE TABLE "WebsiteTick" (
     "status" "WebsiteStatus" NOT NULL,
     "regionId" TEXT NOT NULL,
     "websiteId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "WebsiteTick_pkey" PRIMARY KEY ("id")
 );
