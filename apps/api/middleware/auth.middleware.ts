@@ -3,8 +3,16 @@ import jwt from "jsonwebtoken";
 
 interface UserJwtPayload {
   id: number;
-  email: string;
 }
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: UserJwtPayload;
+    }
+  }
+}
+
 
 export function authMiddleware(req:Request, res:Response, next:NextFunction) {
   const token = req.headers.authorization!;
@@ -16,7 +24,7 @@ try {
   
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as UserJwtPayload;
   
-    req.user = decoded; // { id: number, ... }
+    req.user = {id : decoded.id}; // { id: number, ... }
     next();
 } catch (error) {
   console.log(error);
